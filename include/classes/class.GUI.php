@@ -40,8 +40,11 @@ class GUI{
 	function GUI(){
 		$this->standard_stylesheet = '<link rel="stylesheet" href="include/css/style.css" type="text/css" />';
 		//$this->standard_stylesheet = '<link rel="stylesheet" href="http://apocalypsemystic.com/blarney/style.css" type="text/css" />';
-		$this->functional_js = '<script src="include/js/functions.js" type="text/javascript"></script>';
-		//$this->security_js = '<script src="http://static.ning.com/' . NETWORK . '/resources/js/sha1.js" type="text/javascript"></script>';
+		$this->functional_js = '<script src="include/js/functions.js" type="text/javascript"></script>
+                                <script src="include/js/jquery-1.5.min.js" type="text/javascript"></script>
+                                <script src="include/js/pages.js.js" type="text/javascript"></script>';
+
+//$this->security_js = '<script src="http://static.ning.com/' . NETWORK . '/resources/js/sha1.js" type="text/javascript"></script>';
 		
 	}
 
@@ -78,7 +81,7 @@ class GUI{
 		//default message
 		if ($msg == null) $msg = 'Enter search terms';
 	
-		$src = '<div id="top">
+		$src = '<div id="menuBar">
 					<ul id="search_nav">
 						<li>Browse By:</li>
 						<li><a href="#" onclick="return browse(\'author_browsing\');">Author</a></li>
@@ -88,7 +91,9 @@ class GUI{
 					</ul>
 					<span id="search_link"><a href="#" onclick="return browse(\'search_window\');">Search</a></span>
 				</div>
-				<div id="middle">
+
+                ';
+		/*		<div id="middle">
 					<div id="author_browsing" class="content_1" style="display:none">
 						<div class="navigation_2">
 							<ul>
@@ -105,7 +110,7 @@ class GUI{
 					</div>
 					<div id="subject_browsing" class="content_1" style="display:none">
 						<div id="subject_content" class="content_2">' 
-						. $this->buildBrowseUI('subject','/.*/') . 
+						. $this->buildBrowseUI('subject','/.*//*') .
 						'</div>	
 					</div>
 					<div id="title_browsing" class="content_1" style="display:none">
@@ -149,8 +154,7 @@ class GUI{
 		
 		$src .=		'</div>
 				</div>
-			</div>';
-        echo "done";
+			</div>';*/
 		return $src;
 	}
 	

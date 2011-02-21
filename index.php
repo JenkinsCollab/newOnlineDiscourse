@@ -3,7 +3,17 @@
 
 	require_once('include/kernel.php');
 	
-	
+	$pages = array();
+
+    $curPage = 'home';
+    if(isset($_GET['page']) && array_key_exists($_GET['page'],$pages))
+        $curPage = $_GET['page'];
+
+    $mainContentFile = 'home.php';
+    if(array_key_exists($curPage,$pages)) {
+        $mainContentFile = $pages[$curPage];
+    }
+
 	//get user authentication info and handle accordingly
 	if (isset($_REQUEST['sig'])){
 		$uid = clean_input($_REQUEST['id']);
@@ -26,8 +36,10 @@
 		$gui = new GUI();
 		echo $gui->getAuthError();
 	}
+
+    include 'pages/'.$mainContentFile;
 	//case for having received search results
-	else if ($cmd == 'search'){
+	/*else if ($cmd == 'search'){
 	
 		//guarantee search input
 		if (!isset($_REQUEST['search'])){
@@ -208,7 +220,7 @@
 		echo $gui->buildHeader();
 		echo $gui->buildSearchUI();
 		echo $gui->buildFooter();
-	}
+	}*/
 
 
 

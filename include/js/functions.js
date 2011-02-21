@@ -84,33 +84,23 @@ function validateAddForm(){
 
 //reveal browse hierarchies
 function browse(browseId){
-
-	divToShow = document.getElementById(browseId);
-	className = divToShow.className;
-
-	divs = getDivsByClass(className);
-	
-	//hide other divs of same class
-	for (i=0; i<divs.length; i++){
-		divs[i].style.display = "none";
-	}
-	
-	divToShow.style.display = "block";
-
+    window.location.hash=browseId;
+    $('#content').children().detach();
+    $('#content').append(pages[browseId]);
 	return false;
 }
 
 
 //return array of elements with class == className
 function getDivsByClass(className){
-	toReturn = new Array();
+	var divsWithClass= new Array();
 	divs = document.getElementsByTagName('div');
 	for (i=0; i<divs.length; i++){
 		if (divs[i].className == className){
-			toReturn.push(divs[i]);
+			divsWithClass.push(divs[i]);
 		}
 	}
-	return toReturn;
+	return divsWithClass;
 }
 
 

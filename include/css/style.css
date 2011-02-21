@@ -25,7 +25,7 @@ a{
 /* MAIN SEARCH UI */
 
 /* top nav bar */
-#top{
+#menuBar{
 	position:absolute;
 	top:0;
 	left:0;
@@ -40,7 +40,7 @@ a{
 }
 
 /* main content container */
-#middle{
+#content{
 	position:fixed;
 	top:50px;
 	left:0;
