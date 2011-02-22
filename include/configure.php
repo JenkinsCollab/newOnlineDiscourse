@@ -16,6 +16,8 @@
 	define('SOURCE_TABLE','cd_sources');
 	define('TAG_TABLE','cd_tags');
 	define('TAG_FILE_TABLE','cd_tag_file');
+    define('AUTHOR_TABLE','cd_author');
+
 
 
 	//filepath info

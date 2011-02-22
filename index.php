@@ -3,7 +3,7 @@
 
 	require_once('include/kernel.php');
 	
-	$pages = array();
+	$pages = array('browseAuthor'=>'browseAuthor.php');
 
     $curPage = 'home';
     if(isset($_GET['page']) && array_key_exists($_GET['page'],$pages))
@@ -36,8 +36,11 @@
 		$gui = new GUI();
 		echo $gui->getAuthError();
 	}
-
+    $gui = new GUI();
+    echo $gui->buildHeader();
     include 'pages/'.$mainContentFile;
+    echo $gui->buildFooter();
+
 	//case for having received search results
 	/*else if ($cmd == 'search'){
 	

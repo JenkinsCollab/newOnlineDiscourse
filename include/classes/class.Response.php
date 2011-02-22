@@ -14,9 +14,12 @@ class Response{
 	var $debug = true;	//debug flag
 	var $sql;
 
+    /**
+     *Processes the sql string; sets error flag as necessary.
+     * @param <type> $sql
+     */
 	function Response($sql){
 		$this->sql = $sql;
-//		echo $sql;
 		//process rows of request if no error and store in response array
 		$result = mysql_query($sql) or $this->handle_error(mysql_error());
 		if ($this->error == 0){

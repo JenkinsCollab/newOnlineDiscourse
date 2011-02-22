@@ -58,13 +58,25 @@ class GUI{
 						$this->standard_stylesheet .
 						$this->functional_js
 					. '</head>
-					<body>';
+					<body>
+                    <div id="menuBar">
+					<ul id="search_nav">
+						<li>Browse By:</li>
+						<li><a href="#" onclick="return browse(\'author_browsing\');">Author</a></li>
+						<li><a href="#" onclick="browse(\'subject_content\'); return browse(\'subject_browsing\');">Subject</a></li>
+						<li><a href="#" onclick="return browse(\'title_browsing\');">Title</a></li>
+						<li><a href="#" onclick="return browse(\'year_browsing\');">Year</a></li>
+					</ul>
+					<span id="search_link"><a href="#" onclick="return browse(\'search_window\');">Search</a></span>
+				</div>
+                <div id="content">';
 		return $src;
 	}
 
 
 	function buildFooter(){
-		$src = '</body>
+		$src = '</div>
+                </body>
 				</html>';
 		return $src;
 	}
