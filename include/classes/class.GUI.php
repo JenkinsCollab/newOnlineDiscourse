@@ -40,7 +40,7 @@ class GUI{
 	function GUI(){
 		$this->standard_stylesheet = '<link rel="stylesheet" href="include/css/style.css" type="text/css" />';
 		//$this->standard_stylesheet = '<link rel="stylesheet" href="http://apocalypsemystic.com/blarney/style.css" type="text/css" />';
-		$this->functional_js = '<script src="include/js/functions.js" type="text/javascript"></script>
+		$this->functional_js = '
                                 <script src="include/js/jquery-1.5.min.js" type="text/javascript"></script>
                                 <script src="include/js/pages.js.js" type="text/javascript"></script>';
 
@@ -54,7 +54,8 @@ class GUI{
 	function buildHeader(){
 		
 		$src = '<html>
-					<head>' .
+					<head>
+                  '.
 						$this->standard_stylesheet .
 						$this->functional_js
 					. '</head>
@@ -62,7 +63,7 @@ class GUI{
                     <div id="menuBar">
 					<ul id="search_nav">
 						<li>Browse By:</li>
-						<li><a href="#" onclick="return browse(\'author_browsing\');">Author</a></li>
+						<li><a href="browseAuthor">Author</a></li>
 						<li><a href="#" onclick="browse(\'subject_content\'); return browse(\'subject_browsing\');">Subject</a></li>
 						<li><a href="#" onclick="return browse(\'title_browsing\');">Title</a></li>
 						<li><a href="#" onclick="return browse(\'year_browsing\');">Year</a></li>

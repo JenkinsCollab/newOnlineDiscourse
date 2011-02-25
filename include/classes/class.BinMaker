@@ -1,0 +1,63 @@
+<?php
+/* 
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of class
+ *
+ * @author djs22
+ */
+class BinMaker {
+    private $names;
+    private $L;
+    private $numExp;
+    private $bins;
+    function BinMaker($names, $numSegments){
+        $this->names=$names;
+        $this->numExp=sizeof($names)/$numSegments;
+        makeL();
+        $this->bins=array();
+        makeBins(0,$numSegments);
+    }
+
+
+    private function makeL(){
+        $value=64;
+        $L=array_pad(array(),26,-1);
+        for($i=0;$i<sizeof($this->names);$i++){
+            $name=$this->names[$i];
+            if(ord($name)>$value){
+                $value=ord($name);
+                $L[$value-65]=$i;
+            }
+        }
+        $this->L=$L;
+    }
+
+    private function makeBins($letNum,$numSegs){
+        $min=100000000;
+        if($numSegs==1){
+            return h(25,$letNum);
+        }else if(26-$letnum<$numSegs){
+            return null;
+        }
+        else{
+            for($i=$letNum+1;$i<26;$i++){
+                $min=min( $min,
+                          h($i,$letNum)+makeBins($i,$numSegs-1)
+                        );
+            }
+            $this->bins[$letNum][$numSegs]=$min;
+            return $min;
+        }
+    }
+
+    private function h($next,$cur){
+        return abs($this->L[$next]-$this->L[$cur]
+                -$this->numExp);
+    }
+}
+?>
+ 

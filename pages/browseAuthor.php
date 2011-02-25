@@ -1,57 +1,84 @@
 <?
-
-function cleanArray($var)
-{
-    return array_filter($var);
-}
-
-$numSections=10;
-
-$sql = "SELECT name FROM ".AUTHOR_TABLE." ORDER BY name ASC";
+$numSections = 10;
+$sql = "SELECT * FROM " . AUTHOR_TABLE . " ORDER BY name ASC";
 $authors = array();
 $rsp = new Response($sql);
 
 //parse out different authors
-if($rsp->error!=1){
+if ($rsp->error != 1) {
     foreach ($rsp->get_response() as $resp) {
-        $authors[] = ucwords($resp['name']);
+        $authors[] = array('name'=>ucwords($resp['name']), 'id'=>$resp['id']);
     }
-}else{
+} else {
     echo "DB Access Error.";
 }
-
-$numPerSection = ceil($rsp->size/$numSections);
-$sections =  array();
-$sectionRanges=array();
-
-//Put Together the sections
-    for($i=0;$i<$numSections;$i++){
-        for($j=0;$j<$numPerSection;$j++){
-            $sections[$i][$j]=$authors[$j+$i*$numPerSection];
-        }
-    }
-    $sections=array_filter($sections,"cleanArray");
-
- //Put together the section ranges
-$sectionRanges[0][0]=65;
-$sectionRanges[sizeof($sections)-1][1]=90;
-for($i=0;$i<sizeof($sections)-1;$i++){
-    $sectionRanges[$i][1]=ord($sections[$i][sizeof($sections[$i])-1]);
-  //  echo $i." ".ord($sections[$i][sizeof($sections[$i])-1])."<br>";
-    $sectionRanges[$i+1][0]=$sectionRanges[$i][1]+1;
-}
 ?>
+<script type="text/javascript">
+    var authors = <? echo json_encode($authors); ?>;
+</script>
 
+
+<div id="topSearch" class="">
+    <form method="" action="" autocomplete="off">
+        <input type="text" name="q" id="q"/>
+        <input type="submit" id="search_button" value="Search" />
+    </form>
+</div>
+<div id ="search_results">
+
+</div>
 <div id="author_browsing">
     <div class="navigation_2">
         <ul>
-            <?//print_r($sectionRanges);
-                for($i=0;$i<sizeof($sectionRanges);$i++){
-                    $beg =chr($sectionRanges[$i][0]);
-                    $end =chr($sectionRanges[$i][1]);
-                    echo"<li><a href='#' onclick=\"return browse('".$beg."_".$end."')\">".$beg."-".$end."</a></li>";
-                }
-            ?>
+<? //print_r($sectionRanges);  ?>
         </ul>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    var runningRequest = false;
+    var request;
+
+    //Identify the typing action
+    $('input#q').keyup(function(e){
+        e.preventDefault();
+        var $q = $(this);
+        
+        if($q.val() == ''){
+            $('div#results').html('');
+            return false;
+        }else if(runningRequest){
+            //Abort opened requests to speed it up
+            runningRequest=false;
+        }
+
+        runningRequest=true;
+        showResults(authors, $q.val());
+
+        //Create HTML structure for the results and insert it on the result div
+        function showResults(data, val){
+            var resultHtml = '';
+            var reg = new RegExp('(\s)*'+val+'\w*','ig');
+            $.each(data, function(i,item){
+                if (item.name.match(reg)){
+                    resultHtml+='<div class="result">';
+                   /* resultHtml+='<h2><a href="#">'+item.name+'</a></h2>';
+                    resultHtml+='<p>'+item.post.replace(highlight, '<span class="highlight">'+highlight+'</span>')+'</p>';
+                    resultHtml+='<a href="#" class="readMore">Read more..</a>'*/
+                        resultHtml+=item.name;
+                    resultHtml+='</div>';
+                }
+            });
+
+            $('div#search_results').html(resultHtml);
+        }
+
+        $('form').submit(function(e){
+            e.preventDefault();
+        });
+    });
+</script>
+
+
+
